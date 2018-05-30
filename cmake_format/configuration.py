@@ -80,6 +80,7 @@ class Configuration(ConfigObject):
                separate_ctrl_name_with_space=False,
                separate_fn_name_with_space=False,
                dangle_parens=False,
+               align_after_open_paren=True,
                bullet_char=None,
                enum_char=None,
                line_ending=None,
@@ -98,6 +99,7 @@ class Configuration(ConfigObject):
     self.separate_ctrl_name_with_space = separate_ctrl_name_with_space
     self.separate_fn_name_with_space = separate_fn_name_with_space
     self.dangle_parens = dangle_parens
+    self.align_after_open_paren = align_after_open_paren
 
     self.bullet_char = str(bullet_char)[0]
     if bullet_char is None:

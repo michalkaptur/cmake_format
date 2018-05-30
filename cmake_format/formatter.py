@@ -72,6 +72,7 @@ def format_single_arg(config,  # pylint: disable=unused-argument
   into a block with width at most line_width.
   """
   if arg.comments:
+    import pdb; pdb.set_trace()
     comment_width = line_width - len(arg.contents) - 1
     if comment_width < 0:
       return None
@@ -211,8 +212,8 @@ def format_kwarglist(config, line_width, command_name, args):
 
 def format_nonkwarglist(config, line_width, args):
   """
-  Given a list arguments containing no KWARGS, format into a list of lines
-  """
+    Given a list arguments containing no KWARGS, format into a list of lines
+    """
   indent_str = ''
   lines = ['']
 
@@ -231,6 +232,7 @@ def format_nonkwarglist(config, line_width, args):
       for line in format_single_arg(config,
                                     line_width - len(indent_str), arg):
         lines.append(indent_str + line)
+    import pdb; pdb.set_trace()
     return lines
 
   for arg in args:
@@ -250,7 +252,7 @@ def format_nonkwarglist(config, line_width, args):
 
     # Lines to add if we are going to make a new line for this arg
     lines_new = format_single_arg(
-        config, line_width - len(indent_str), arg)
+      config, line_width - len(indent_str), arg)
 
     if lines_new and not lines_new[0].strip():
       logging.warn("BUG! format_single_arg returned empty first line")
@@ -266,7 +268,7 @@ def format_nonkwarglist(config, line_width, args):
       for line in lines_new:
         lines.append(indent_str + line)
     else:
-      arg_indent_str = u' ' * (len(lines[-1]) + 1)
+      arg_indent_str = create_arg_indent_str(config, len(lines[-1]))
       if lines[-1]:
         lines[-1] += u' '
       lines[-1] += lines_append[0]
@@ -275,6 +277,14 @@ def format_nonkwarglist(config, line_width, args):
         lines.append(arg_indent_str + line)
 
   return lines
+
+def create_arg_indent_str(config, command_length):
+  indent_char = u' '
+  import pdb; pdb.set_trace()
+  if config.align_after_open_paren:
+    return indent_char * (command_length + 1)
+  else:
+    return indent_char * config.tab_size
 
 
 def format_arglist(config, line_width, command_name, args):
@@ -402,6 +412,7 @@ def format_command(config, command, line_width):
       chosen = lines_a
       lines = [command_start + lines_a[0]]
       indent_str = u' ' * len(command_start)
+      indent_str = create_arg_indent_str(config, len(command_start))
       for line in lines_a[1:]:
         lines.append(indent_str + line)
 

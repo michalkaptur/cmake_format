@@ -764,6 +764,22 @@ class TestCanonicalFormatting(unittest.TestCase):
       FoO(bar baz)
       """)
 
+  def test_aling_after_open_paren(self):
+    config_dict = self.config.as_dict()
+    config_dict['tab_size'] = 2
+    config_dict['align_after_open_paren'] = False
+    self.config = configuration.Configuration(**config_dict)
+    self.do_format_test(
+      """\
+      foobar(firstverylongarggumentone, secondverylongarggument, thirdverylongargument, fourthverylongargument)
+      """, """\
+      foobar(firstverylongarggumentone,
+        secondverylongarggument,
+        thirdverylongargument,
+        fourthverylongargument)
+      """
+    )
+
   def test_example_file(self):
     thisdir = os.path.dirname(__file__)
     infile_path = os.path.join(thisdir, 'test', 'test_in.cmake')

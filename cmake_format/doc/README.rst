@@ -85,6 +85,10 @@ pleasant way.
     # parenthesis on it's own line
     dangle_parens = False
 
+    # If a statement is wrapped to more than one line, align arguments after
+    # an open parenthesis
+    align_after_open_paren = True
+
     # What character to use for bulleted lists
     bullet_char = u'*'
 
